@@ -1,0 +1,6 @@
+{
+  "name": "ClinicaScreen AI",
+  "description": "Evidence-based, AI-assisted preliminary health screening platform for skin, eye, dental, and acoustic voice patterns.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
