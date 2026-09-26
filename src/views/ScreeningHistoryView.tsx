@@ -59,7 +59,7 @@ export const ScreeningHistoryView: React.FC<ScreeningHistoryViewProps> = ({
     const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(history, null, 2));
     const dlAnchor = document.createElement('a');
     dlAnchor.setAttribute('href', dataStr);
-    dlAnchor.setAttribute('download', `ClinicaScreen_History_${new Date().toISOString().slice(0, 10)}.json`);
+    dlAnchor.setAttribute('download', `PathoSense_History_${new Date().toISOString().slice(0, 10)}.json`);
     dlAnchor.click();
   };
 

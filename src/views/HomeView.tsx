@@ -321,7 +321,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
             Multimodal Evidence Processing Engine
           </h2>
           <p className="text-sm text-slate-600 max-w-3xl mt-1">
-            We reject the monolithic approach of a single model guessing every human disease. ClinicaScreen AI enforces a separated multi-stage safety pipeline.
+            We reject the monolithic approach of a single model guessing every human disease. PathoSense enforces a separated multi-stage safety pipeline.
           </p>
         </div>
 

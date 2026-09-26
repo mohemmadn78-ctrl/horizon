@@ -46,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="w-8 h-8 rounded-lg bg-teal-600 flex items-center justify-center text-white shadow-sm">
               <Activity className="w-4 h-4" />
             </div>
-            <span>ClinicaScreen AI</span>
+            <span>PathoSense</span>
           </button>
 
           {/* Zone 2: 4-6 clean text navigation links */}

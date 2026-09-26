@@ -63,7 +63,7 @@ export const FindDoctorView: React.FC<FindDoctorViewProps> = ({
       <div className="p-3.5 bg-slate-100 rounded-xl border border-slate-200 text-xs text-slate-600 flex items-start gap-2.5">
         <ShieldCheck className="w-4 h-4 text-teal-700 shrink-0 mt-0.5" />
         <p className="leading-relaxed">
-          <strong className="text-slate-900 font-semibold">Integrity Notice:</strong> In accordance with clinical standards, ClinicaScreen AI does not fabricate real-time appointment availability slots. Please call the clinic directly to confirm same-day openings or book verified consultations.
+          <strong className="text-slate-900 font-semibold">Integrity Notice:</strong> In accordance with clinical standards, PathoSense does not fabricate real-time appointment availability slots. Please call the clinic directly to confirm same-day openings or book verified consultations.
         </p>
       </div>
 

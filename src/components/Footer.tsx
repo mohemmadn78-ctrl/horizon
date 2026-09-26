@@ -26,7 +26,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <div className="w-6 h-6 rounded bg-teal-600 flex items-center justify-center text-white">
                 <Activity className="w-3.5 h-3.5" />
               </div>
-              <span className="font-bold text-slate-900 tracking-tight">ClinicaScreen AI</span>
+              <span className="font-bold text-slate-900 tracking-tight">PathoSense</span>
             </div>
             <p className="text-xs text-slate-500 leading-relaxed mb-4">
               Evidence-based preliminary clinical pattern screening system prioritizing input quality gates, uncertainty bounds, explainability, and prompt human medical referral.
@@ -130,7 +130,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         </div>
 
         <div className="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} ClinicaScreen AI Research Platform. Designed for clinical decision support and health education.</p>
+          <p>© {new Date().getFullYear()} PathoSense Research Platform. Designed for clinical decision support and health education.</p>
           <div className="flex items-center gap-4">
             <button onClick={() => onNavigate('privacy')} className="hover:underline">
               Consent & Privacy

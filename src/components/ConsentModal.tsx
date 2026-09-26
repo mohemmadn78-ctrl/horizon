@@ -69,7 +69,7 @@ export const ConsentModal: React.FC<ConsentModalProps> = ({
           <div className="bg-teal-50/60 border border-teal-200/70 rounded-lg p-3.5 flex items-start gap-3">
             <Lock className="w-4 h-4 text-teal-700 shrink-0 mt-0.5" />
             <p className="text-xs text-teal-900 leading-relaxed">
-              Health information is treated as highly sensitive data. ClinicaScreen AI uses encrypted HTTPS in-flight transmission and strict transient processing. We do not require your real name, government ID, or insurance information.
+              Health information is treated as highly sensitive data. PathoSense uses encrypted HTTPS in-flight transmission and strict transient processing. We do not require your real name, government ID, or insurance information.
             </p>
           </div>
 
@@ -79,7 +79,7 @@ export const ConsentModal: React.FC<ConsentModalProps> = ({
               1. Information Collected & Processing Purpose
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              When using ClinicaScreen AI, you may submit photographs of skin, eyes, or teeth, acoustic audio recordings of your voice during standardized phonation tasks, and self-reported descriptions of your symptoms or duration. This data is processed strictly to extract relevant mathematical and visual patterns (such as lesion asymmetry or acoustic jitter) for preliminary decision support.
+              When using PathoSense, you may submit photographs of skin, eyes, or teeth, acoustic audio recordings of your voice during standardized phonation tasks, and self-reported descriptions of your symptoms or duration. This data is processed strictly to extract relevant mathematical and visual patterns (such as lesion asymmetry or acoustic jitter) for preliminary decision support.
             </p>
           </div>
 
@@ -121,7 +121,7 @@ export const ConsentModal: React.FC<ConsentModalProps> = ({
                 className="mt-1 h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
               />
               <span className="text-xs leading-relaxed text-slate-800">
-                <strong className="font-medium text-slate-900">Mandatory Clinical Screening Consent:</strong> I acknowledge that ClinicaScreen AI is an experimental preliminary decision support tool and NOT a medical diagnosis. I consent to transient image, audio, and symptom feature analysis.
+                <strong className="font-medium text-slate-900">Mandatory Clinical Screening Consent:</strong> I acknowledge that PathoSense is an experimental preliminary decision support tool and NOT a medical diagnosis. I consent to transient image, audio, and symptom feature analysis.
               </span>
             </label>
 

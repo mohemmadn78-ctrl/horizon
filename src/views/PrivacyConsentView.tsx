@@ -60,7 +60,7 @@ export const PrivacyConsentView: React.FC<PrivacyConsentViewProps> = ({
     const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(exportBundle, null, 2));
     const dlAnchor = document.createElement('a');
     dlAnchor.setAttribute('href', dataStr);
-    dlAnchor.setAttribute('download', `ClinicaScreen_HealthDataExport_${new Date().toISOString().slice(0, 10)}.json`);
+    dlAnchor.setAttribute('download', `PathoSense_HealthDataExport_${new Date().toISOString().slice(0, 10)}.json`);
     dlAnchor.click();
   };
 
@@ -77,7 +77,7 @@ export const PrivacyConsentView: React.FC<PrivacyConsentViewProps> = ({
           Privacy Policy, Data Security & Patient Consent
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
-          ClinicaScreen AI is engineered under the principle that sensitive health information belongs exclusively to the individual. Learn how your data is processed, protected, and completely under your control.
+          PathoSense is engineered under the principle that sensitive health information belongs exclusively to the individual. Learn how your data is processed, protected, and completely under your control.
         </p>
       </div>
 
@@ -144,7 +144,7 @@ export const PrivacyConsentView: React.FC<PrivacyConsentViewProps> = ({
               3. Are Images and Audio Stored on Cloud Servers?
             </h3>
             <p>
-              <strong>No.</strong> ClinicaScreen AI operates on a local-first, ephemeral model. The server does not store uploaded images or audio files in permanent persistent databases without separate written protocol consent. Screening summaries are stored directly in your browser's private local storage on your device.
+              <strong>No.</strong> PathoSense operates on a local-first, ephemeral model. The server does not store uploaded images or audio files in permanent persistent databases without separate written protocol consent. Screening summaries are stored directly in your browser's private local storage on your device.
             </p>
           </div>
 
@@ -194,7 +194,7 @@ export const PrivacyConsentView: React.FC<PrivacyConsentViewProps> = ({
                 <span className="font-bold text-slate-900 block">
                   Clinical Screening Processing Consent (Required for Screening)
                 </span>
-                I acknowledge that ClinicaScreen AI is an evidence-based preliminary decision support system and NOT a medical diagnosis. I consent to transient computer-vision and acoustic feature extraction.
+                I acknowledge that PathoSense is an evidence-based preliminary decision support system and NOT a medical diagnosis. I consent to transient computer-vision and acoustic feature extraction.
               </div>
             </label>
 

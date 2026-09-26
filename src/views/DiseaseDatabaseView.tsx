@@ -52,7 +52,7 @@ export const DiseaseDatabaseView: React.FC<DiseaseDatabaseViewProps> = ({
             Medication & Treatment Information Policy:
           </p>
           <p className="leading-relaxed">
-            ClinicaScreen AI explains medicines and treatment categories used for a condition for educational purposes only. <strong>We do not prescribe medications.</strong> These treatments may be used for this condition; a qualified healthcare professional must determine whether they are appropriate for your individual clinical status.
+            PathoSense explains medicines and treatment categories used for a condition for educational purposes only. <strong>We do not prescribe medications.</strong> These treatments may be used for this condition; a qualified healthcare professional must determine whether they are appropriate for your individual clinical status.
           </p>
         </div>
       </div>

@@ -30,7 +30,7 @@ export const AboutAIView: React.FC = () => {
           Clinical Model Validation & Ethical AI Safety Architecture
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 mt-2 max-w-3xl leading-relaxed">
-          ClinicaScreen AI enforces strict separation between domain-specific models. Explore independent validation cohorts, sensitivity/specificity benchmarks, demographic bias audits across Fitzpatrick skin tones, and our multi-stage safety layers.
+          PathoSense enforces strict separation between domain-specific models. Explore independent validation cohorts, sensitivity/specificity benchmarks, demographic bias audits across Fitzpatrick skin tones, and our multi-stage safety layers.
         </p>
       </div>
 
@@ -102,7 +102,7 @@ export const AboutAIView: React.FC = () => {
         </div>
 
         <p className="text-xs text-slate-300 leading-relaxed">
-          ClinicaScreen AI leverages <strong>Groq's Language Processing Units (LPUs)</strong> running the open-weights <strong>openai/gpt-oss-120b</strong> foundation model. This dedicated architecture enables deterministic, sub-second latency for clinical symptom triage, conversational decision support, and doctor visit question generation.
+          PathoSense leverages <strong>Groq's Language Processing Units (LPUs)</strong> running the open-weights <strong>openai/gpt-oss-120b</strong> foundation model. This dedicated architecture enables deterministic, sub-second latency for clinical symptom triage, conversational decision support, and doctor visit question generation.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">

@@ -1,7 +1,7 @@
 import { ScreeningResult, UserConsentState } from '../types';
 
-const CONSENT_STORAGE_KEY = 'clinicascreen_user_consent';
-const HISTORY_STORAGE_KEY = 'clinicascreen_screening_history';
+const CONSENT_STORAGE_KEY = 'pathosense_user_consent';
+const HISTORY_STORAGE_KEY = 'pathosense_screening_history';
 
 export const ASSET_IMAGES = {
   hero: '/src/assets/images/hero_clinical_diagnostic_1790375342005.jpg',
