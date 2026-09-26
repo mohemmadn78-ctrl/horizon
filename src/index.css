@@ -8,3 +8,47 @@
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
 }
+
+/* Subtle Biomedical Micro-Grid Pattern */
+.bg-biomedical-grid {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.18) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-biomedical-grid-dark {
+  background-image: radial-gradient(rgba(45, 212, 191, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Precision Scanner Line Animation */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}
+
+.animate-scanline {
+  animation: scanline 3s linear infinite;
+}
+
+/* Subtle Pulse Glow */
+.glow-teal-subtle {
+  box-shadow: 0 0 25px -5px rgba(20, 184, 166, 0.25);
+}
+
+/* Print optimizations for clinical doctor reports */
+@media print {
+  header, footer, .no-print {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .print-break-inside-avoid {
+    break-inside: avoid;
+  }
+}

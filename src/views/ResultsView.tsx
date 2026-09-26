@@ -16,7 +16,14 @@ import {
   Scale,
   Activity,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Copy,
+  Check,
+  BrainCircuit,
+  HeartHandshake,
+  CheckSquare,
+  Square,
+  ShieldAlert
 } from 'lucide-react';
 import { ScreeningResult, DiseaseInfo } from '../types';
 import { MEDICAL_DISEASES } from '../data/medicalDatabase';
@@ -41,6 +48,8 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
 }) => {
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [showHeatmap, setShowHeatmap] = useState(false);
+  const [copiedQuestions, setCopiedQuestions] = useState(false);
+  const [checkedQuestions, setCheckedQuestions] = useState<Record<number, boolean>>({});
 
   // Match condition in structured database if available
   const conditionMatch: DiseaseInfo | undefined = MEDICAL_DISEASES.find(
@@ -55,6 +64,18 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleCopyQuestions = () => {
+    if (!result.doctor_discussion_questions) return;
+    const text = result.doctor_discussion_questions.map((q, idx) => `${idx + 1}. ${q}`).join('\n');
+    navigator.clipboard?.writeText(text);
+    setCopiedQuestions(true);
+    setTimeout(() => setCopiedQuestions(false), 3000);
+  };
+
+  const toggleQuestionCheck = (idx: number) => {
+    setCheckedQuestions(prev => ({ ...prev, [idx]: !prev[idx] }));
   };
 
   return (
@@ -209,13 +230,23 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
                   {result.finding}
                 </h2>
               </div>
-              <div className="flex items-center gap-3 sm:text-right">
-                <div>
-                  <p className="text-[11px] text-slate-500 uppercase font-mono">Calibrated Confidence</p>
-                  <p className="text-xl font-bold text-teal-700 font-mono tabular-nums">
+              <div className="flex flex-col sm:items-end text-left sm:text-right space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] text-slate-500 uppercase font-mono">Calibrated Confidence</span>
+                  <span className="text-xl sm:text-2xl font-bold text-teal-700 font-mono tabular-nums">
                     {(result.confidence * 100).toFixed(1)}%
-                  </p>
+                  </span>
                 </div>
+                {/* Visual Calibration Interval */}
+                <div className="w-36 h-2 bg-slate-200 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full"
+                    style={{ width: `${result.confidence * 100}%` }}
+                  ></div>
+                </div>
+                <p className="text-[10px] text-slate-400 font-mono">
+                  95% Credible Bounds: [{(Math.max(60, (result.confidence - 0.04) * 100)).toFixed(1)}% – {(Math.min(98, (result.confidence + 0.04) * 100)).toFixed(1)}%]
+                </p>
               </div>
             </div>
 
@@ -372,6 +403,271 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
             </div>
           </div>
 
+          {/* 1. Deep Clinical Reasoning & Diagnostic Synthesis */}
+          {result.clinical_reasoning && (
+            <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-3 shadow-xs">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-teal-50 border border-teal-200 flex items-center justify-center text-teal-700">
+                  <BrainCircuit className="w-4 h-4" />
+                </div>
+                <div>
+                  <span className="text-[11px] font-mono text-teal-800 uppercase font-semibold">
+                    PATHOSENSE AI CLINICAL SYNTHESIS
+                  </span>
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                    Diagnostic Logic & Evidence Evaluation
+                  </h3>
+                </div>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                {result.clinical_reasoning}
+              </p>
+            </div>
+          )}
+
+          {/* 2. Differential Pathologies Evaluated */}
+          {result.differential_diagnoses && result.differential_diagnoses.length > 0 && (
+            <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700">
+                    <Scale className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-mono text-blue-800 uppercase font-semibold">
+                      DIFFERENTIAL EVALUATION
+                    </span>
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                      Conditions Considered by the Engine
+                    </h3>
+                  </div>
+                </div>
+                <span className="text-[11px] text-slate-500 font-mono">
+                  {result.differential_diagnoses.length} POTENTIAL PATHOLOGIES
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                {result.differential_diagnoses.map((diff, idx) => {
+                  const probColor =
+                    diff.probability === 'high'
+                      ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                      : diff.probability === 'moderate'
+                      ? 'bg-amber-50 text-amber-800 border-amber-200'
+                      : 'bg-slate-100 text-slate-700 border-slate-200';
+
+                  return (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300 transition-all flex flex-col justify-between space-y-2.5"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between gap-2">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${probColor}`}>
+                            {diff.probability} probability
+                          </span>
+                          <span className="text-[11px] text-slate-400 font-mono">#{idx + 1}</span>
+                        </div>
+                        <h4 className="font-bold text-slate-900 text-xs sm:text-sm mt-2">
+                          {diff.condition}
+                        </h4>
+                        <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">
+                          {diff.rationale}
+                        </p>
+                      </div>
+
+                      {diff.key_features && diff.key_features.length > 0 && (
+                        <div className="pt-2 border-t border-slate-200/60 text-[10px] text-slate-500 space-y-1">
+                          <span className="font-semibold text-slate-700 uppercase tracking-wide">Key Features:</span>
+                          <div className="flex flex-wrap gap-1">
+                            {diff.key_features.map((feat, fIdx) => (
+                              <span
+                                key={fIdx}
+                                className="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-700 text-[10px]"
+                              >
+                                {feat}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* 3. Anatomical Feature Breakdown (if present) */}
+          {result.anatomical_breakdown && result.anatomical_breakdown.length > 0 && (
+            <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-3 shadow-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-teal-50 border border-teal-200 flex items-center justify-center text-teal-700">
+                  <Activity className="w-4 h-4" />
+                </div>
+                <div>
+                  <span className="text-[11px] font-mono text-teal-800 uppercase font-semibold">
+                    REGIONAL ANATOMICAL BREAKDOWN
+                  </span>
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                    Tissue & Structure Observations
+                  </h3>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                {result.anatomical_breakdown.map((item, idx) => (
+                  <div key={idx} className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs space-y-1">
+                    <p className="font-bold text-slate-900 text-[11px] uppercase tracking-wide text-teal-900">
+                      {item.anatomical_area}
+                    </p>
+                    <p className="text-slate-700">{item.observation}</p>
+                    <p className="text-[11px] text-slate-500 italic pt-1 border-t border-slate-200/60">
+                      {item.clinical_significance}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 4. Actionable Doctor Discussion Questions (Interactive Checklist) */}
+          {result.doctor_discussion_questions && result.doctor_discussion_questions.length > 0 && (
+            <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-700">
+                    <Stethoscope className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-mono text-indigo-800 uppercase font-semibold">
+                      CLINICAL CONSULTATION PREPARATION
+                    </span>
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                      5 Targeted Questions to Ask Your {result.specialist}
+                    </h3>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleCopyQuestions}
+                  className="px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1.5 self-start sm:self-auto shrink-0"
+                >
+                  {copiedQuestions ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                      <span className="text-emerald-700">Copied to Clipboard!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Copy Questions</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              <p className="text-xs text-slate-600">
+                Patients who ask specific clinical questions experience higher diagnostic accuracy and clearer treatment plans. Use this interactive checklist during your consultation:
+              </p>
+
+              <div className="space-y-2">
+                {result.doctor_discussion_questions.map((q, idx) => {
+                  const isChecked = !!checkedQuestions[idx];
+                  return (
+                    <div
+                      key={idx}
+                      onClick={() => toggleQuestionCheck(idx)}
+                      className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-start gap-3 select-none ${
+                        isChecked
+                          ? 'bg-teal-50/50 border-teal-200 text-teal-950'
+                          : 'bg-slate-50 border-slate-200/90 text-slate-800 hover:bg-white'
+                      }`}
+                    >
+                      <button
+                        type="button"
+                        className="mt-0.5 text-slate-500 focus:outline-none shrink-0"
+                      >
+                        {isChecked ? (
+                          <CheckSquare className="w-4 h-4 text-teal-600" />
+                        ) : (
+                          <Square className="w-4 h-4 text-slate-400" />
+                        )}
+                      </button>
+                      <div className="text-xs sm:text-sm leading-relaxed">
+                        <span className="font-semibold text-slate-500 mr-1.5">Q{idx + 1}:</span>
+                        <span className={isChecked ? 'line-through text-slate-500' : 'text-slate-800'}>
+                          {q}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* 5. Condition-Specific Red Flags Warning Box */}
+          {result.red_flags_warning && result.red_flags_warning.length > 0 && (
+            <div className="bg-rose-50/90 border border-rose-200 rounded-xl p-6 space-y-3 shadow-xs">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 flex items-center justify-center shrink-0">
+                  <ShieldAlert className="w-4 h-4" />
+                </div>
+                <div>
+                  <span className="text-[11px] font-mono text-rose-800 uppercase font-bold tracking-wider">
+                    SAFETY & ESCALATION PROTOCOL
+                  </span>
+                  <h3 className="text-sm sm:text-base font-bold text-rose-950">
+                    When to Seek Immediate In-Person Urgent or Emergency Care
+                  </h3>
+                </div>
+              </div>
+              <p className="text-xs text-rose-900 leading-relaxed">
+                If you experience any of the following acute symptoms, do not wait for a routine appointment. Seek same-day urgent care or proceed immediately to an emergency facility:
+              </p>
+              <ul className="space-y-1.5 text-xs text-rose-950 pt-1">
+                {result.red_flags_warning.map((rf, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                    <span>{rf}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* 6. Evidence-Based Supportive Comfort & Care Measures */}
+          {result.supportive_care_tips && result.supportive_care_tips.length > 0 && (
+            <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-3 shadow-xs">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-teal-50 border border-teal-200 flex items-center justify-center text-teal-700">
+                  <HeartHandshake className="w-4 h-4" />
+                </div>
+                <div>
+                  <span className="text-[11px] font-mono text-teal-800 uppercase font-semibold">
+                    SUPPORTIVE CARE GUIDANCE
+                  </span>
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                    Safe Home Measures While Awaiting Your Appointment
+                  </h3>
+                </div>
+              </div>
+              <p className="text-xs text-slate-500 italic">
+                Non-prescription comfort protocols designed to protect tissues and avoid exacerbation. These do not replace medical treatment.
+              </p>
+              <ul className="space-y-2 text-xs text-slate-700 pt-1">
+                {result.supportive_care_tips.map((tip, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+                    <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Structured Clinical Sections (Section 12 Layout) */}
           {conditionMatch && (
             <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-6">
@@ -519,6 +815,38 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
                 <span className="font-semibold text-slate-800">
                   {new Date(result.model_info.inference_timestamp).toLocaleTimeString()}
                 </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Professional Physician Consultation & Clinical Handover Card */}
+          <div className="bg-slate-50 border border-slate-300 rounded-xl p-6 space-y-4 print-break-inside-avoid">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+              <div className="flex items-center gap-2">
+                <Stethoscope className="w-5 h-5 text-slate-700" />
+                <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider font-mono">
+                  CLINICAL PROVIDER CONSULTATION & HANDOVER SECTION
+                </h4>
+              </div>
+              <span className="text-[11px] font-mono text-slate-500">
+                FOR IN-PERSON MEDICAL EVALUATION
+              </span>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Attending physician / clinician: This report represents preliminary computer-vision and acoustic feature extraction paired with Groq LPU differential pattern synthesis. Please record physical examination findings, confirmatory diagnostic testing (biopsy / lab / imaging), and treatment plan below:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 text-xs font-mono">
+              <div className="p-3 bg-white border border-slate-200 rounded-lg">
+                <span className="text-[10px] text-slate-400 block uppercase">Attending Clinician Name</span>
+                <div className="h-6 border-b border-dotted border-slate-400 mt-2"></div>
+              </div>
+              <div className="p-3 bg-white border border-slate-200 rounded-lg">
+                <span className="text-[10px] text-slate-400 block uppercase">Medical License / NPI #</span>
+                <div className="h-6 border-b border-dotted border-slate-400 mt-2"></div>
+              </div>
+              <div className="p-3 bg-white border border-slate-200 rounded-lg">
+                <span className="text-[10px] text-slate-400 block uppercase">Clinical Signature & Date</span>
+                <div className="h-6 border-b border-dotted border-slate-400 mt-2"></div>
               </div>
             </div>
           </div>

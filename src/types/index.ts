@@ -46,6 +46,19 @@ export interface ModelMetadata {
   hardware_target?: string;
 }
 
+export interface DifferentialDiagnosis {
+  condition: string;
+  probability: 'high' | 'moderate' | 'low';
+  rationale: string;
+  key_features?: string[];
+}
+
+export interface AnatomicalFeatureObservation {
+  anatomical_area: string;
+  observation: string;
+  clinical_significance: string;
+}
+
 export interface ScreeningResult {
   id: string;
   timestamp: string;
@@ -61,6 +74,12 @@ export interface ScreeningResult {
   recommended_next_step: string;
   specialist: string;
   urgency_level: 'routine' | 'prompt_evaluation' | 'urgent_consult' | 'emergency';
+  clinical_reasoning?: string;
+  differential_diagnoses?: DifferentialDiagnosis[];
+  doctor_discussion_questions?: string[];
+  red_flags_warning?: string[];
+  supportive_care_tips?: string[];
+  anatomical_breakdown?: AnatomicalFeatureObservation[];
   user_reported_concerns?: string;
   user_reported_context?: {
     duration?: string;

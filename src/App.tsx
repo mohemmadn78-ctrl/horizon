@@ -5,6 +5,7 @@ import { Footer } from './components/Footer';
 import { EmergencyBanner } from './components/EmergencyBanner';
 import { ConsentModal } from './components/ConsentModal';
 import { GroqAssistantModal } from './components/GroqAssistantModal';
+import { TelemetryRibbon } from './components/TelemetryRibbon';
 
 import { HomeView } from './views/HomeView';
 import { ScreeningHubView } from './views/ScreeningHubView';
@@ -95,6 +96,12 @@ export default function App() {
         }
       />
 
+      {/* Real-Time Precision Telemetry Ribbon */}
+      <TelemetryRibbon
+        onOpenGroq={() => handleOpenGroqWithQuestion()}
+        onNavigateToAboutAI={() => handleNavigate('about_ai')}
+      />
+
       {/* Top Bar Navigation */}
       <Navbar
         currentView={currentView}
@@ -107,7 +114,10 @@ export default function App() {
       {/* Main Page Stage */}
       <main className="flex-1">
         {currentView === 'home' && (
-          <HomeView onNavigate={handleNavigate} />
+          <HomeView
+            onNavigate={handleNavigate}
+            onOpenGroqAssistant={(prompt) => handleOpenGroqWithQuestion(prompt)}
+          />
         )}
 
         {currentView === 'screening_hub' && (
